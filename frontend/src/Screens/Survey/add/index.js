@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import axios from "axios";
+import { Link } from "react-router-dom";
 import API from "../../../Components/API";
 
 const Addsurvey = () => {
@@ -31,6 +31,14 @@ const Addsurvey = () => {
   };
   return (
     <div>
+      <nav>
+        <Link to="/">
+          <button>Home</button>
+        </Link>
+        <Link to="/list">
+          <button>Show Survey List</button>
+        </Link>
+      </nav>
       <h1>Add Survey</h1>
       <form onSubmit={handleSubmit}>
         <div>
