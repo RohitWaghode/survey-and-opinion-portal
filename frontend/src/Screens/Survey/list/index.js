@@ -19,6 +19,19 @@ const SurveyList = () => {
     }
   };
 
+  const handleDelete = async (uid) => {
+    try {
+      const response = await API.DELETE(`/survey/delete/${uid}`);
+      if (response.data.output) {
+        setSurveyData(surveyData.filter((survey) => survey.uid !== uid));
+      } else {
+        console.log("Failed to delete the survey");
+      }
+    } catch (error) {
+      console.log("Error deleting survey:", error);
+    }
+  };
+
   useEffect(() => {
     fetchSurveyList();
   }, []);
@@ -50,6 +63,12 @@ const SurveyList = () => {
                 <Link to={`/edit/${survey.uid}`}>
                   <button className="edit-button">Edit</button>
                 </Link>
+                <button
+                  className="delete-button"
+                  onClick={() => handleDelete(survey.uid)}
+                >
+                  Delete
+                </button>
               </li>
             ))}
           </ol>
