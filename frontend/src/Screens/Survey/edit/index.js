@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import API from "../../../Components/API";
+import "../../../Styles/AddSurvey.css";
 
 const UpdateSurvey = () => {
   const { uid } = useParams();
@@ -11,7 +12,6 @@ const UpdateSurvey = () => {
   const fetchSurveyData = async () => {
     try {
       const response = await API.GET(`/survey/list`);
-
       const survey = response.data.output.find((survey) => survey.uid === uid);
 
       if (survey) {
@@ -56,27 +56,45 @@ const UpdateSurvey = () => {
   };
 
   return (
-    <div>
-      <h1>Update Survey</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Question:</label>
-          <input type="text" value={question} onChange={handleQuestionChange} />
-        </div>
-        <div>
-          <label>Responses:</label>
-          {responses.map((response, index) => (
-            <div key={index}>
-              <input
-                type="text"
-                value={response}
-                onChange={(e) => handleResponseChange(e, index)}
-              />
-            </div>
-          ))}
-        </div>
-        <button type="submit">Update Survey</button>
-      </form>
+    <div className="container">
+      <nav className="nav">
+        <Link to="/">
+          <button className="nav-btn">Home</button>
+        </Link>
+        <Link to="/list">
+          <button className="nav-btn">Survey List</button>
+        </Link>
+      </nav>
+      <h1 className="heading">Update Survey</h1>
+      <div className="form">
+        <form onSubmit={handleSubmit}>
+          <div className="list">
+            <label className="label">Question:</label>
+            <input
+              type="text"
+              value={question}
+              onChange={handleQuestionChange}
+              className="input"
+            />
+          </div>
+          <div className="list">
+            <label className="label">Responses:</label>
+            {responses.map((response, index) => (
+              <div key={index}>
+                <input
+                  type="text"
+                  value={response}
+                  onChange={(e) => handleResponseChange(e, index)}
+                  className="input"
+                />
+              </div>
+            ))}
+          </div>
+          <button type="submit" className="submit-btn">
+            Update Survey
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

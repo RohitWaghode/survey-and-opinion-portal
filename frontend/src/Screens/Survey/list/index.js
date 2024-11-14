@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../../../Components/API";
+import "../../../Styles/ListSurvey.css";
 
 const SurveyList = () => {
   const [surveyData, setSurveyData] = useState([]);
 
   const fetchSurveyList = async () => {
-    const response = await API.GET("/survey/list");
-
-    if (Array.isArray(response.data.output)) {
-      setSurveyData(response.data.output);
-    } else {
-      console.log("Error fetching survey data");
+    try {
+      const response = await API.GET("/survey/list");
+      if (Array.isArray(response.data.output)) {
+        setSurveyData(response.data.output);
+      } else {
+        console.log("Error fetching survey data");
+      }
+    } catch (error) {
+      console.log("Error:", error);
     }
   };
 
@@ -20,31 +24,39 @@ const SurveyList = () => {
   }, []);
 
   return (
-    <div>
-      <nav>
+    <div className="survey-list-container">
+      <nav className="nav">
         <Link to="/">
-          <button>Home</button>
+          <button className="nav-button">Home</button>
         </Link>
         <Link to="/add">
-          <button> Add Survey</button>
+          <button className="nav-button">Add Survey</button>
         </Link>
       </nav>
-      <h1>Survey List</h1>
-      <ol>
-        {surveyData.map((survey, index) => (
-          <li key={index}>
-            <h3>{survey.question}</h3>
-            <ol>
-              {survey.response.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ol>
-            <Link to={`/edit/${survey.uid}`}>
-              <button>Edit</button>
-            </Link>
-          </li>
-        ))}
-      </ol>
+      <h1 className="survey-list-heading">Survey List</h1>
+      <div className="survey-list-box">
+        {surveyData.length > 0 ? (
+          <ol className="survey-list">
+            {surveyData.map((survey, index) => (
+              <li key={index} className="survey-item">
+                <h3>{survey.question}</h3>
+                <ol className="survey-responses">
+                  {survey.response.map((item, i) => (
+                    <li key={i} className="survey-response">
+                      {item}
+                    </li>
+                  ))}
+                </ol>
+                <Link to={`/edit/${survey.uid}`}>
+                  <button className="edit-button">Edit</button>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p>No surveys available.</p>
+        )}
+      </div>
     </div>
   );
 };
