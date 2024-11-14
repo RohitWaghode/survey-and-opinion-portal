@@ -1,0 +1,43 @@
+* {
+  background-color: #f4f6f9;
+}
+.home {
+  padding-left: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav {
+  margin: 25px;
+  display: flex;
+  gap: 20px;
+}
+
+.home h1 {
+  font-weight: bold;
+  color: #124374;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.p {
+  width: 800px;
+  margin-top: 50px;
+  text-align: justify;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  color: #34495e;
+  padding: 0 20px;
+}
