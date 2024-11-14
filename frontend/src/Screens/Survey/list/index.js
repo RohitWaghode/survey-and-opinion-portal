@@ -26,7 +26,7 @@ const SurveyList = () => {
           <button>Home</button>
         </Link>
         <Link to="/add">
-          <button>Show Survey List</button>
+          <button> Add Survey</button>
         </Link>
       </nav>
       <h1>Survey List</h1>
