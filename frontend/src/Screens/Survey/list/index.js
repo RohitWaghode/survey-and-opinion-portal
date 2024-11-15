@@ -20,15 +20,19 @@ const SurveyList = () => {
   };
 
   const handleDelete = async (uid) => {
-    try {
-      const response = await API.DELETE(`/survey/delete/${uid}`);
-      if (response.data.output) {
-        setSurveyData(surveyData.filter((survey) => survey.uid !== uid));
-      } else {
-        console.log("Failed to delete the survey");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this survey?"
+    );
+
+    if (confirmDelete) {
+      try {
+        const response = await API.DELETE(`/survey/delete/${uid}`);
+        if (response.data.output) {
+          setSurveyData(surveyData.filter((survey) => survey.uid !== uid));
+        }
+      } catch (error) {
+        console.log("Error deleting survey:", error);
       }
-    } catch (error) {
-      console.log("Error deleting survey:", error);
     }
   };
 
@@ -53,18 +57,18 @@ const SurveyList = () => {
             {surveyData.map((survey, index) => (
               <li key={index} className="survey-item">
                 <h3>{survey.question}</h3>
-                <ol className="survey-responses">
+                <ul className="survey-responses">
                   {survey.response.map((item, i) => (
                     <li key={i} className="survey-response">
-                      {item}
+                      <button className="res-btn">{item}</button>
                     </li>
                   ))}
-                </ol>
+                </ul>
                 <Link to={`/edit/${survey.uid}`}>
                   <button className="edit-button">Edit</button>
                 </Link>
                 <button
-                  className="delete-button"
+                  className="edit-button"
                   onClick={() => handleDelete(survey.uid)}
                 >
                   Delete
